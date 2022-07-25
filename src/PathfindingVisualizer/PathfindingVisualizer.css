@@ -1,0 +1,28 @@
+.grid{
+    align-items: center;
+    justify-content: center;
+}
+
+.grid button{
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 5px;
+    margin-top: 50px;
+    margin-bottom: 100px;
+    margin-right: 15px;
+    margin-left: 15px;
+    border: 1px solid black;
+    font-size: large;
+    font-weight: bold;
+    background-color: rgb(252, 222, 226);
+}
+
+.grid button:active{
+    outline: rgb(105, 10, 114) auto 5px;
+}
+
+.grid button:disabled{
+    color: rgb(230, 148, 148);
+    outline: rgb(230, 148, 148) auto 5px;
+}
