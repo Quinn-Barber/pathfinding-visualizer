@@ -7,3 +7,5 @@
 * Dijkstra's Algorithm
 
 ### Accessible at https://quinn-barber.github.io/pathfinding-Visualizer/
+
+> Inspired by Clément Mihailescu
