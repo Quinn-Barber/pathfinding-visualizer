@@ -5,5 +5,6 @@
 
 ### Algorithms implemented include:
 * Dijkstra's Algorithm
+* Depth First Search Algorithm
 
 ### Accessible at https://quinn-barber.github.io/pathfinding-Visualizer/
