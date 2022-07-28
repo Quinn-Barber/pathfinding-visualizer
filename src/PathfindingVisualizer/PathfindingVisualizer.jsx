@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Node from './Node/Node';
 import {dijkstra, getNodesInShortestPathOrder} from '../algorithms/dijkstra';
+import {dfs} from '../algorithms/dfs';
 import './PathfindingVisualizer.css';
 
 const START_NODE_ROW = 10;
@@ -57,6 +58,22 @@ export default class PathfindingVisualizer extends Component {
     }
   }
 
+  animateDFS(visitedNodesInOrder, nodesInShortestPathOrder) {
+    for (let i = 0; i <= visitedNodesInOrder.length; i++) {
+      if (i === visitedNodesInOrder.length) {
+        setTimeout(() => {
+          this.animateShortestPath(nodesInShortestPathOrder);
+        }, 10 * i);
+        return;
+      }
+      setTimeout(() => {
+        const node = visitedNodesInOrder[i];
+        document.getElementById(`node-${node.row}-${node.col}`).className =
+          'node node-visited';
+      }, 10 * i);
+    }
+  }
+
   animateShortestPath(nodesInShortestPathOrder) {
     for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
       setTimeout(() => {
@@ -82,20 +99,63 @@ export default class PathfindingVisualizer extends Component {
     this.animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
   }
 
-  disableButtons(){
-    var clearBtn = document.getElementById('clear');
-    var dijkstraBtn = document.getElementById('dijkstra');
+  visualizeDFS() {
+    this.disableButtons();
+    this.setState({animating: true});
+    const {grid} = this.state;
+    const startNode = grid[START_NODE_ROW][START_NODE_COL];
+    const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+    const visitedNodesInOrder = dfs(grid, startNode, finishNode);
+    const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
+    this.animateDFS(visitedNodesInOrder, nodesInShortestPathOrder);
+  }
 
-    clearBtn.disabled = true;
+  disableButtons(){
+    var clearBoardBtn = document.getElementById('clearBoard');
+    var clearColorBtn = document.getElementById('clearColors');
+    var dijkstraBtn = document.getElementById('dijkstra');
+    var dfsBtn = document.getElementById('dfs');
+
+
+    dfsBtn.disabled = true;
+    clearBoardBtn.disabled = true;
+    clearColorBtn.disabled = true;
     dijkstraBtn.disabled = true;
   }
 
   enableButtons(){
-    var clearBtn = document.getElementById('clear');
+    var clearBoardBtn = document.getElementById('clearBoard');
+    var clearColorBtn = document.getElementById('clearColors');
     var dijkstraBtn = document.getElementById('dijkstra');
+    var dfsBtn = document.getElementById('dfs');
 
-    clearBtn.disabled = false;
+    dfsBtn.disabled = false;
+    clearBoardBtn.disabled = false;
+    clearColorBtn.disabled = false;
     dijkstraBtn.disabled = false;
+  }
+
+  clearColors(){
+    const newGrid = this.state.grid;
+    for(let i = 0; i < newGrid.length; i++){
+      for(let j = 0; j < newGrid[i].length; j++){
+        newGrid[i][j].previousNode = null;
+        newGrid[i][j].distance = Infinity;
+        newGrid[i][j].isVisited = false;
+        document.getElementById(`node-${i}-${j}`).className = 'node ';
+        if(this.state.grid[i][j].isWall === true){
+          document.getElementById(`node-${i}-${j}`).className = 'node node-wall';
+        }
+        if(i === START_NODE_ROW && j === START_NODE_COL){
+          document.getElementById(`node-${i}-${j}`).className = 'node node-start';
+        }
+        if(i === FINISH_NODE_ROW && j === FINISH_NODE_COL){
+          document.getElementById(`node-${i}-${j}`).className = 'node node-finish';
+        }
+      }
+    }
+    this.setState({grid: newGrid});
+    
   }
 
   clearBoard(){
@@ -131,9 +191,15 @@ export default class PathfindingVisualizer extends Component {
       <button id = "dijkstra" onClick={() => this.visualizeDijkstra()}>
             Visualize Dijkstra's Algorithm
         </button>
-      <button id = "clear" onClick={() => this.clearBoard()}>
-            Clear Board
+        <button id = "dfs" onClick={() => this.visualizeDFS()}>
+            Visualize Depth First Search's Algorithm
         </button>
+      <button id = "clearColors" onClick={() => this.clearColors()}>
+            Clear Colors
+        </button>
+      <button id = "clearBoard" onClick={() => this.clearBoard()}>
+            Clear Board
+      </button>
         {grid.map((row, rowIdx) => {
           return (
             <div key={rowIdx}>
