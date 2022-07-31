@@ -4,8 +4,11 @@
 ### Deployment code available in branch labled `gh-pages`
 
 ### Algorithms implemented include:
-* Dijkstra's Algorithm
+* Dijkstra's
+* Depth First Search
+
+### Algorithms to be implemented:
+* A-Star
+* Breadth First Search
 
 ### Accessible at https://quinn-barber.github.io/pathfinding-Visualizer/
-
-> Inspired by Clément Mihailescu
