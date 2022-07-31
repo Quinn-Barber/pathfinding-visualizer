@@ -4,7 +4,11 @@
 ### Source code available in branch labled `master`
 
 ### Algorithms implemented include:
-* Dijkstra's Algorithm
-* Depth First Search Algorithm
+* Dijkstra's
+* Depth First Search
+
+### Algorithms to be implemented:
+* A-Star
+* Breadth First Search
 
 ### Accessible at https://quinn-barber.github.io/pathfinding-Visualizer/
