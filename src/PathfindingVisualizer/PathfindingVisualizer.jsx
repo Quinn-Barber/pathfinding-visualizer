@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Node from './Node/Node';
 import {dijkstra, getNodesInShortestPathOrder} from '../algorithms/dijkstra';
 import {dfs} from '../algorithms/dfs';
+import {astar} from '../algorithms/astar';
 import './PathfindingVisualizer.css';
 
 const START_NODE_ROW = 10;
@@ -74,6 +75,10 @@ export default class PathfindingVisualizer extends Component {
     }
   }
 
+  animateAstar(visitedNodesInOrder, nodesInShortestPathOrder) {
+
+  }
+
   animateShortestPath(nodesInShortestPathOrder) {
     for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
       setTimeout(() => {
@@ -110,13 +115,26 @@ export default class PathfindingVisualizer extends Component {
     this.animateDFS(visitedNodesInOrder, nodesInShortestPathOrder);
   }
 
+  visualizeAstar(){
+    this.disableButtons();
+    this.setState({animating: true});
+    const {grid} = this.state;
+    const startNode = grid[START_NODE_ROW][START_NODE_COL];
+    const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+    const visitedNodesInOrder = astar(grid, startNode, finishNode);
+    const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
+    this.animateAstar(visitedNodesInOrder, nodesInShortestPathOrder);
+    this.enableButtons();
+  }
+
   disableButtons(){
     var clearBoardBtn = document.getElementById('clearBoard');
     var clearColorBtn = document.getElementById('clearColors');
     var dijkstraBtn = document.getElementById('dijkstra');
     var dfsBtn = document.getElementById('dfs');
+    var astarBtn = document.getElementById('astar');
 
-
+    astarBtn.disabled = true;
     dfsBtn.disabled = true;
     clearBoardBtn.disabled = true;
     clearColorBtn.disabled = true;
@@ -128,7 +146,9 @@ export default class PathfindingVisualizer extends Component {
     var clearColorBtn = document.getElementById('clearColors');
     var dijkstraBtn = document.getElementById('dijkstra');
     var dfsBtn = document.getElementById('dfs');
+    var astarBtn = document.getElementById('astar');
 
+    astarBtn.disabled = false;
     dfsBtn.disabled = false;
     clearBoardBtn.disabled = false;
     clearColorBtn.disabled = false;
@@ -192,7 +212,10 @@ export default class PathfindingVisualizer extends Component {
             Visualize Dijkstra's Algorithm
         </button>
         <button id = "dfs" onClick={() => this.visualizeDFS()}>
-            Visualize Depth First Search's Algorithm
+            Visualize Depth First Search Algorithm
+        </button>
+        <button id = "astar" onClick={() => this.visualizeAstar()}>
+            Visualize A-Star Algorithm
         </button>
       <button id = "clearColors" onClick={() => this.clearColors()}>
             Clear Colors
