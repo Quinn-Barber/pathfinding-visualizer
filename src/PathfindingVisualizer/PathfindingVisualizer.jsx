@@ -31,6 +31,7 @@ export default class PathfindingVisualizer extends Component {
     this.setState({grid: newGrid, mouseIsPressed: true});
   }
 
+  
   handleMouseEnter(row, col) {
     if (this.state.animating) return;
     if (!this.state.mouseIsPressed) return;
@@ -76,7 +77,19 @@ export default class PathfindingVisualizer extends Component {
   }
 
   animateAstar(visitedNodesInOrder, nodesInShortestPathOrder) {
-
+    for (let i = 0; i <= visitedNodesInOrder.length; i++) {
+      if (i === visitedNodesInOrder.length) {
+        setTimeout(() => {
+          this.animateShortestPath(nodesInShortestPathOrder);
+        }, 10 * i);
+        return;
+      }
+      setTimeout(() => {
+        const node = visitedNodesInOrder[i];
+        document.getElementById(`node-${node.row}-${node.col}`).className =
+          'node node-visited';
+      }, 10 * i);
+    }
   }
 
   animateShortestPath(nodesInShortestPathOrder) {
@@ -124,7 +137,6 @@ export default class PathfindingVisualizer extends Component {
     const visitedNodesInOrder = astar(grid, startNode, finishNode);
     const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
     this.animateAstar(visitedNodesInOrder, nodesInShortestPathOrder);
-    this.enableButtons();
   }
 
   disableButtons(){
@@ -237,9 +249,7 @@ export default class PathfindingVisualizer extends Component {
                     isWall={isWall}
                     mouseIsPressed={mouseIsPressed}
                     onMouseDown={(row, col) => this.handleMouseDown(row, col)}
-                    onMouseEnter={(row, col) =>
-                      this.handleMouseEnter(row, col)
-                    }
+                    onMouseEnter={(row, col) => this.handleMouseEnter(row, col)}
                     onMouseUp={() => this.handleMouseUp()}
                     row={row}></Node>
                 );
@@ -275,6 +285,8 @@ const createNode = (col, row) => {
     isVisited: false,
     isWall: false,
     previousNode: null,
+    fValue: Infinity,
+    gValue: Infinity,
   };
 };
 
