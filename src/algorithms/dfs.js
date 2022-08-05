@@ -12,7 +12,6 @@ export function dfs(grid, startNode, finishNode) {
 }
 
 function dfsRecurse(grid, node, visitedNodesInOrder, finishNode){
-  console.log("HERE");
   const {col, row} = node;
   if(ret === true) return;
   if (node.isWall) return;
@@ -69,14 +68,4 @@ function getAllNodes(grid) {
     }
   }
   return nodes;
-}
-
-export function getNodesInShortestPathOrder(finishNode) {
-  const nodesInShortestPathOrder = [];
-  let currentNode = finishNode;
-  while (currentNode !== null) {
-    nodesInShortestPathOrder.unshift(currentNode);
-    currentNode = currentNode.previousNode;
-  }
-  return nodesInShortestPathOrder;
 }
