@@ -6,9 +6,9 @@
 ### Algorithms implemented include:
 * Dijkstra's
 * Depth First Search
+* A-Star
 
 ### Algorithms to be implemented:
-* A-Star
 * Breadth First Search
 
 ### Accessible at https://quinn-barber.github.io/pathfinding-Visualizer/
