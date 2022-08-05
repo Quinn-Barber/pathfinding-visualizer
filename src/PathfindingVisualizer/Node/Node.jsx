@@ -13,6 +13,8 @@ export default class Node extends Component {
       onMouseEnter,
       onMouseUp,
       row,
+      fValue,
+      gValue,
     } = this.props;
     const extraClassName = isFinish
       ? 'node-finish'

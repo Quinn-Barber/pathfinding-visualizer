@@ -4,6 +4,7 @@
     outline: 1px solid rgb(230, 202, 243);
     display: inline-block;
     margin: -1px 0px -1px 0px;
+    -webkit-user-drag: none;
 }
 
 .node-finish {
