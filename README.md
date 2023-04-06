@@ -8,4 +8,4 @@
 * Depth First Search
 * A-Star
 
-### Accessible at https://quinn-barber.github.io/pathfinding-Visualizer/
+### Accessible at https://quinn-barber.github.io/pathfinding-visualizer/
