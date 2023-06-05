@@ -1,7 +1,7 @@
 {
   "name": "pathfinding-visualizer",
   "version": "0.1.0",
-  "homepage": "https://quinn-barber.github.io/pathfinding-Visualizer/",
+  "homepage": "https://quinn-barber.github.io/",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
